@@ -45,6 +45,7 @@ export default {
    span{
        cursor: pointer;
        padding: 10px;
+       
    }
    .active{
        color: red;
