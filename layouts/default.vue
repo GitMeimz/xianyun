@@ -43,4 +43,7 @@ a{
 ul li ol {
     list-style: none;
 }
+i{
+  font-style:normal;
+}
 </style>
