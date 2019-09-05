@@ -17,19 +17,20 @@
       </el-row>
 
       <!-- 登录跳转    -->
-      <div class="login" v-if="!$store.state.user.userInfo">
+      <div v-if="!$store.state.user.userInfo.token">
+         <!-- <div v-if="false"> -->
         <nuxt-link to="/user/login">注册/登录</nuxt-link>
       </div>
       <div v-else>
         <el-dropdown>
-          <span class="el-dropdown-link img-link">
+          <span class="el-dropdown-link ">
             <img :src="$axios.defaults.baseURL+$store.state.user.userInfo.user.defaultAvatar" alt />
             <span>{{$store.state.user.userInfo.user.nickname}}</span>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>个人中心</el-dropdown-item>
-            <el-dropdown-item @click.native="clearUserInfo">退出</el-dropdown-item>
+            <el-dropdown-item @click.native="handleLogout">退出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -39,6 +40,16 @@
 
 <script>
 export default {
+  methods:{
+    handleLogout(){
+      const {commit} = this.$store;
+      commit('user/clearUserInfo');
+      this.$message({
+        message:'退出成功',
+        type:'success'
+      })
+    }
+  },
     mounted(){
         console.log(this.$store.state.user.userInfo)
     }
@@ -92,21 +103,18 @@ export default {
     display: block;
   }
 }
-.img-link{
+.el-dropdown-link{
+  cursor: pointer;
   img{
-    width: 30px;
-    height: 30px;
-    vertical-align: middle;
-    border: 1px solid #fff;
-    border-radius: 50%;
-    box-sizing: border-box;
-   &:hover{
-         border: 1px blue solid;
-         border-radius: 50%;
-          
-          
-    }
-  }
-  
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  box-sizing: border-box;
+ vertical-align: middle;
+ border:2px #fff solid;
+ &:hover{
+   border:2px #409eff solid;
+ }
+}
 }
 </style>
