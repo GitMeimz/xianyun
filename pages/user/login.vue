@@ -12,7 +12,9 @@
           >{{item}}</span>
         </el-row>
         <!-- 登录功能组件 -->
-        <loginForm></loginForm>
+        <loginForm  v-if ="currentTab==0"></loginForm>
+        <!-- 注册功能组件 -->
+        <registerForm  v-if ="currentTab==1"></registerForm>
       </div>
     </el-row>
   </div>
@@ -20,6 +22,7 @@
 
 <script>
 import loginForm from "@/components/user/loginForm.vue";
+import registerForm from "@/components/user/registerForm.vue";
 export default {
   data() {
     return {
@@ -27,7 +30,8 @@ export default {
     };
   },
   components: {
-    loginForm
+    loginForm,
+    registerForm
   },
   methods: {
     handleChangeTab(index) {
@@ -41,7 +45,7 @@ export default {
 .login {
   height: 700px;
   min-width: 1000px;
-  background: url(http://157.122.54.189:9095/assets/images/th03.jfif);
+   background: url(http://157.122.54.189:9095/assets/images/th03.jfif);
 }
 .main {
   width: 1000px;
