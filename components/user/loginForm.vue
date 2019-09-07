@@ -64,9 +64,9 @@ export default {
                 type: "success"
               });
             })
-            .catch(() => {
-              this.$message.error("服务器异常");
-            });
+            // .catch(() => {
+            //   this.$message.error("服务器异常");
+            // });
         }else{
             this.$message({
                 message:'请填写信息',
