@@ -18,6 +18,7 @@
           :fetch-suggestions="queryDepartSearch"
           placeholder="请搜索出发城市"
           @select="handleDepartSelect"
+          @blur="handleDepartBlur"
           class="el-autocomplete"
           v-model="form.departCity"
         ></el-autocomplete>
@@ -30,6 +31,7 @@
           :fetch-suggestions="queryDestSearch"
           placeholder="请搜索到达城市"
           @select="handleDestSelect"
+          @blur="handlDesBlur"
           class="el-autocomplete"
           v-model="form.destCity"
         ></el-autocomplete>
@@ -57,7 +59,7 @@
 </template>
 
 <script>
-// import moment from "moment";
+import moment from "moment";
 export default {
   data() {
     return {
@@ -72,15 +74,34 @@ export default {
         destCity: "",
         destCode: "", //到达城市代码
         departDate: ""
-      }
+      },
+      departData: [],
+      destData: []
     };
   },
   methods: {
-    handleDestSelect() {},
-
-    handleDepartSelect() {},
-
- 
+    // 出发城市下拉选择时触发
+    handleDepartSelect(item) {
+      // 把选中值设置给form
+      this.form.destCity = item.value;
+      this.form.destCode = item.sort;
+    },
+    // 到达城市下拉选择时触发
+    handleDestSelect(item) {
+      // 把选中值设置给form
+      this.form.destCity = item.value;
+      this.form.destCode = item.sort;
+    },
+    // 出发城市失焦事件
+    handleDepartBlur() {
+      this.form.departCity = this.departData[0] ? this.departData[0].value : "";
+      this.form.departCode = this.departData[0] ? this.departData[0].sort : "";
+    },
+    // 到达城市失焦事件
+    handlDesBlur() {
+      this.form.destCity = this.destData[0] ? this.destData[0].value : "";
+      this.form.destCode = this.destData[0] ? this.destData[0].sort : "";
+    },
     handleSearchTab(index) {
       if (index === 1) {
         this.$confirm("目前暂不支持往返，请使用单程选票！", "提示", {
@@ -108,9 +129,11 @@ export default {
           v.value = v.name.replace("市", "");
           newData.push(v);
         });
+
         // 默认选中第一个
-        this.form.departCity = newData[0].value;
-        this.form.departCode = newData[0].sort;
+        // this.form.departCity = newData[0].value;
+        // this.form.departCode = newData[0].sort;
+        this.departData = newData;
         cb(newData);
       });
     },
@@ -143,43 +166,53 @@ export default {
         });
 
         // 默认选中第一个
-        this.form.destCity = newData[0].value;
-        this.form.destCode = newData[0].sort;
-
+        // this.form.destCity = newData[0].value;
+        // this.form.destCode = newData[0].sort;
+        this.destData = newData;
         //显示到下拉列表中
         cb(newData);
       });
     },
     handleDate(value) {
-      //   this.form.departDate = moment(value).format(`YYYY-MM-DD`);
+      this.form.departDate = moment(value).format(`YYYY-MM-DD`);
     },
     handleSubmit() {
       console.log(this.form);
-      const rules = {
-        depart: {
-          value: this.form.departCity,
-          message: "请选择出发城市"
-        },
-        dest: {
-          value: this.form.destCity,
-          message: "请选择到达城市"
-        },
-        departDate: {
-          value: this.form.departDate,
-          message: "请选择出发时间"
-        }
-      };
-    },
-       handleReverse() {
-         const {departCity, departCode, destCity, destCode} = this.form;
+      const { departCity, destCity, departDate } = this.form;
 
-            // 交叉赋值
-            this.form.departCity = destCity;
-            this.form.departCode = destCode;
+      // 判断输入框不能为空
+      if (!departCity) {
+        this.$alert("出发城市不能为空", "提示");
+        return;
+      }
 
-            this.form.destCity = departCity;
-            this.form.destCode = departCode;
+      if (!destCity) {
+        this.$alert("到达城市不能为空", "提示");
+        return;
+      }
+
+      if (!departDate) {
+        this.$alert("出发日期不能为空", "提示");
+        return;
+      }
+
+      // 跳转到机票列表页 /air/flights
+      this.$router.push({
+        path: "/air/flights",
+        // url携带的参数
+        query: this.form
+      });
     },
+    handleReverse() {
+      const { departCity, departCode, destCity, destCode } = this.form;
+
+      // 交叉赋值
+      this.form.departCity = destCity;
+      this.form.departCode = destCode;
+
+      this.form.destCity = departCity;
+      this.form.destCode = departCode;
+    }
   }
 };
 </script>
