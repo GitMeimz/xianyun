@@ -83,8 +83,8 @@ export default {
     // 出发城市下拉选择时触发
     handleDepartSelect(item) {
       // 把选中值设置给form
-      this.form.destCity = item.value;
-      this.form.destCode = item.sort;
+      this.form.departCity = item.value;
+      this.form.departCode = item.sort;
     },
     // 到达城市下拉选择时触发
     handleDestSelect(item) {
