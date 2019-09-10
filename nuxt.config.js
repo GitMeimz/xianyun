@@ -13,7 +13,8 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', type: 'text/less', href: '//at.alicdn.com/t/font_1168872_ehvuah8v57g.css' } // 新增全局字体样式
+      { rel: 'stylesheet', type: 'text/css', href: '//at.alicdn.com/t/font_1168872_ehvuah8v57g.css' }
+      // 新增全局字体样式
     ],
     css: [
       "assets/main.css"//新增自定义的页面过度样式
@@ -34,7 +35,7 @@ export default {
   */
   plugins: [
     '@/plugins/element-ui',
-    {src:'@/plugins/localStorage',ssr:false},
+    { src: '@/plugins/localStorage', ssr: false },
     '@/plugins/axios.js' //调用插件
   ],
   /*
@@ -54,7 +55,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL:"http://127.0.0.1:1337"  //默认请求路径
+    baseURL: "http://127.0.0.1:1337"  //默认请求路径
   },
   /*
   ** Build configuration

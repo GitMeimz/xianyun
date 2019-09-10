@@ -195,7 +195,10 @@ export default {
         this.$alert("出发日期不能为空", "提示");
         return;
       }
-
+      // 添加到本地存储
+      const airs = JSON.parse(localStorage.getItem("airs") || `[]`);
+      airs.push(this.form);
+      localStorage.setItem("airs", JSON.stringify(airs));
       // 跳转到机票列表页 /air/flights
       this.$router.push({
         path: "/air/flights",
