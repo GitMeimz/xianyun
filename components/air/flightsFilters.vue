@@ -114,7 +114,14 @@ export default {
     },
 
     // 撤销条件时候触发
-    handleFiltersCancel() {}
+    handleFiltersCancel() {
+      this.airport = ""; //起飞机场
+      this.flightTimes = ""; //起飞时间
+      this.company = ""; //航空公司
+      this.airSize = ""; //机型
+
+      this.$emit("setDataList", this.data.flights);
+    }
   }
 };
 </script>

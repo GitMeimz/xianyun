@@ -78,12 +78,6 @@ export default {
     flightsFilters
   },
 
-  // watch: {
-  //   $route() {
-  //     //请求航班列表数据
-  //     this.getData();
-  //   }
-  // },
   methods: {
     getData() {
       //   获取航班列表数据
